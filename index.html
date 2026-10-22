@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>動物性格地圖｜DISC 行為風格小測驗</title>
+<meta name="description" content="老虎、孔雀、無尾熊、貓頭鷹，你身上哪一種最多？32 題情境題，約 5 分鐘，看看你的 DISC 行為風格。">
+<meta property="og:title" content="動物性格地圖｜DISC 行為風格小測驗">
+<meta property="og:description" content="32 題情境題，約 5 分鐘，看看你身上哪一種動物最多。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+<style>
+:root{
+  --bg:#faf7f2; --surface:#ffffff; --surface-2:#f2ede4; --text:#1f1d1a; --muted:#6b655c; --line:#e3dccf;
+  --accent:#2f6f5e; --accent-text:#ffffff;
+  --d:#d9534f; --i:#e9a23b; --s:#3f9b6b; --c:#3b74c4;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 20px rgba(0,0,0,.06);
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16171a; --surface:#202227; --surface-2:#2a2d33; --text:#ecebe8; --muted:#a3a09a; --line:#353840;
+    --accent:#6cc3a6; --accent-text:#0f1a16;
+    --d:#ef7a75; --i:#f2bc63; --s:#6cc394; --c:#74a3ea;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16171a; --surface:#202227; --surface-2:#2a2d33; --text:#ecebe8; --muted:#a3a09a; --line:#353840;
+  --accent:#6cc3a6; --accent-text:#0f1a16;
+  --d:#ef7a75; --i:#f2bc63; --s:#6cc394; --c:#74a3ea;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+  line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 64px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 0;position:sticky;top:0;background:var(--bg);z-index:5}
+.brand{font-weight:700;font-size:16px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:6px;background:none;border:0;cursor:pointer;padding:0}
+.icon-btn{background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer}
+.icon-btn:hover{background:var(--surface-2)}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.3;margin:24px 0 12px}
+h2{font-size:20px;margin:0 0 10px}
+h3{font-size:16px;margin:0 0 6px}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.animals{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}
+@media (min-width:560px){.animals{grid-template-columns:repeat(4,1fr)}}
+.animal{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;border-top:4px solid var(--k)}
+.animal .emo{font-size:34px;line-height:1.2}
+.animal b{display:block;font-size:16px}
+.animal small{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:12px 20px;font-size:16px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--text);text-decoration:none}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:15px;margin-top:8px;cursor:pointer}
+.check input{margin-top:6px;width:18px;height:18px;accent-color:var(--accent)}
+.hidden{display:none !important}
+
+/* quiz */
+.progress{height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin:8px 0 6px}
+.progress > i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.q-meta{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.q-title{font-size:clamp(19px,4.6vw,23px);font-weight:700;margin:22px 0 16px;line-height:1.5}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--surface);border:1.5px solid var(--line);color:var(--text);border-radius:14px;padding:14px 16px;font-size:16px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--accent)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-size:13px;font-weight:700;color:var(--muted)}
+.opt.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
+.opt.sel .k{background:var(--accent);color:var(--accent-text)}
+.q-nav{display:flex;justify-content:space-between;margin-top:20px}
+
+/* result */
+.hero{text-align:center;padding:28px 20px;border-top:6px solid var(--k)}
+.hero .emo{font-size:64px;line-height:1.1}
+.hero .type{font-size:14px;color:var(--muted);letter-spacing:.08em}
+.hero h1{margin:6px 0 6px}
+.hero .tag{font-size:18px;font-weight:600;color:var(--k)}
+.chart-grid{display:grid;gap:16px;align-items:center}
+@media (min-width:600px){.chart-grid{grid-template-columns:260px 1fr}}
+.radar{width:100%;max-width:260px;margin:0 auto;display:block}
+.bars{display:grid;gap:12px}
+.bar-row{display:grid;grid-template-columns:86px 1fr 46px;gap:10px;align-items:center;font-size:15px}
+.bar{height:14px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.bar > i{display:block;height:100%;border-radius:999px}
+.bar-row b{text-align:right;font-variant-numeric:tabular-nums}
+ul.list{margin:0;padding-left:20px}
+ul.list li{margin-bottom:4px}
+.two{display:grid;gap:16px}
+@media (min-width:600px){.two{grid-template-columns:1fr 1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--surface-2);border-radius:999px;padding:4px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted);margin-top:24px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.others{display:grid;gap:10px}
+.other{display:flex;gap:12px;align-items:flex-start}
+.other .emo{font-size:26px;line-height:1.2}
+@media print{
+  header.top,.btn-row,.no-print{display:none !important}
+  body{background:#fff;color:#000}
+  .card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <button class="brand" id="brandBtn" type="button">🐾 動物性格地圖</button>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="切換深淺色">🌓 深色</button>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <main id="home">
+    <h1>你身上，住著哪一種動物？</h1>
+    <p>這份小測驗參考心理學家威廉・馬斯頓（William Marston）在 1928 年提出的 DISC 模型，把常見的行為風格歸納成四種傾向，並用四種動物來比喻。</p>
+    <div class="animals" id="animalCards"></div>
+    <p>四種傾向人人都有，差別只在比例。它們沒有好壞之分，每一種都有擅長的地方，也有容易卡住的地方。</p>
+    <div class="card">
+      <h2>開始之前</h2>
+      <p>共 <b id="qCount">32</b> 題情境題，大約 5 分鐘。每題選出<b>最像平常的你</b>的選項，不用想太久，也不用挑「應該」怎麼做。</p>
+      <p class="muted" style="font-size:15px">作答只存在你自己的瀏覽器裡，不會上傳到任何伺服器。中途離開，下次打開會從原處繼續。</p>
+      <label class="check"><input type="checkbox" id="agree"> <span>我了解這份測驗只是自我探索的參考，不是診斷，也不適合拿來評斷別人。</span></label>
+      <div class="btn-row">
+        <button class="btn primary" id="startBtn" type="button" disabled>開始測驗</button>
+        <button class="btn hidden" id="resumeBtn" type="button">繼續上次的進度</button>
+        <button class="btn hidden" id="lastBtn" type="button">看上次的結果</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- QUIZ -->
+  <main id="quiz" class="hidden">
+    <div class="q-meta"><span id="qNum">第 1 題</span><span id="qPct">0%</span></div>
+    <div class="progress"><i id="qBar"></i></div>
+    <div class="q-title" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="q-nav">
+      <button class="btn" id="prevBtn" type="button">← 上一題</button>
+      <button class="btn primary hidden" id="finishBtn" type="button">看結果 →</button>
+    </div>
+    <p class="note">小技巧：可以用鍵盤 1–4 選答，← 回上一題。</p>
+  </main>
+
+  <!-- RESULT -->
+  <main id="result" class="hidden"></main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- 四種類型 ---------- */
+var TYPES = {
+  D:{ key:"D", animal:"老虎", emoji:"🐯", word:"支配", name:"D 支配型", color:"var(--d)",
+      tag:"目標在前，就往前衝",
+      flavor:"行動力與決斷",
+      desc:"你重視成果與效率，習慣掌握主導權。遇到問題時，你的第一個念頭通常是「怎麼解決」，而不是「為什麼會這樣」。越是有壓力的場面，你越能集中火力。",
+      strengths:["決定得快，也願意扛下結果","面對挑戰不退縮，越難越有勁","能把模糊的目標變成具體行動","說話直接坦率，不繞圈子"],
+      blind:["急著要結果，可能忽略了別人的感受","對細節和過程比較沒耐心","「帶頭」一不小心就變成「掌控」"],
+      stress:"壓力下會變得更強勢，說話更衝，想把所有事情攬在自己手上。",
+      withYou:["先講結論，細節後面再補","給你選項和決定的空間","就事論事，不必拐彎抹角"],
+      yourTips:["做決定前，多問一句「你覺得呢？」","稱讚別人的努力過程，不只看成果","把命令改成邀請，例如「我們試試看…」"],
+      careers:["創業","專案管理","業務開發","營運主管","危機處理","律師"],
+      growth:"試著放慢半拍。你的速度是很大的優勢，但讓別人跟得上，團隊才能走得更遠。" },
+  I:{ key:"I", animal:"孔雀", emoji:"🦚", word:"影響", name:"I 影響型", color:"var(--i)",
+      tag:"有人的地方，就是你的舞台",
+      flavor:"熱情與感染力",
+      desc:"你樂觀外向、擅長表達，常常讓身邊的人覺得輕鬆自在。你在乎關係與認同，用熱情帶動別人，也是團隊裡新點子的來源。",
+      strengths:["表達力好，很會說故事","跟陌生人也能很快熟起來","樂觀，能替團隊帶來能量","點子多，反應快"],
+      blind:["一口氣答應太多，最後做不完","對重複、瑣碎的工作容易失去耐心","說的比做的多，細節容易漏掉"],
+      stress:"壓力下可能變得情緒化，或是用開玩笑、換話題來躲開問題。",
+      withYou:["給你表達和互動的空間","肯定你的貢獻，最好當著大家的面說","重要細節寫下來提醒，不要長篇說教"],
+      yourTips:["答應之前，先看一眼行事曆","重要的事情，用文字再確認一次","等對方說完再接話"],
+      careers:["行銷企劃","公關","業務","講師或主持","活動策劃","內容創作"],
+      growth:"替你的熱情接上一套簡單的追蹤方法（清單、提醒），你的影響力會更持久。" },
+  S:{ key:"S", animal:"無尾熊", emoji:"🐨", word:"穩定", name:"S 穩定型", color:"var(--s)",
+      tag:"穩穩的，最讓人安心",
+      flavor:"耐心與溫暖",
+      desc:"你溫和、有耐心，是很好的傾聽者。你重視和諧與穩定，習慣在背後默默支持大家，是團隊裡的定心丸。",
+      strengths:["可靠，做事有始有終","善於傾聽，能體會別人的感受","讓團隊保持穩定與和諧","有耐心，適合長期耕耘"],
+      blind:["不太會拒絕，常常委屈自己","面對變動會不安，傾向維持現狀","有意見時常放在心裡不說"],
+      stress:"壓力下會變得安靜、退讓，嘴上說沒關係，情緒卻在心裡慢慢累積。",
+      withYou:["有變動時提早說，並說明原因","給你時間想，不要逼你當場表態","真心關心你，而不只是交代事情"],
+      yourTips:["練習說「我想一下」或「這次我沒辦法」","把你的想法說出來，大家其實很想聽","把大的改變拆成小步驟，一次適應一點"],
+      careers:["人力資源","護理與照護","教育輔導","客戶服務","行政管理","社工"],
+      growth:"你的意見和別人的一樣重要。偶爾替自己發聲，關係不會變差，反而更真實。" },
+  C:{ key:"C", animal:"貓頭鷹", emoji:"🦉", word:"分析", name:"C 分析型", color:"var(--c)",
+      tag:"想清楚了，再出手",
+      flavor:"精準與邏輯",
+      desc:"你理性、細心，在乎正確與品質。你習慣先收集資訊、比較利弊，才做出決定；事情交到你手上，大家都很放心。",
+      strengths:["注重細節，品質穩定","邏輯清楚，擅長分析","做事有計畫、有系統","能提早看見風險"],
+      blind:["追求完美，有時拖慢進度","不常表露情緒，容易被當成冷淡","對錯誤的容忍度比較低"],
+      stress:"壓力下會變得更挑剔、更退縮，陷入一再檢查或想太多的循環。",
+      withYou:["提供資料和明確的標準","給你準備的時間，避免臨時改變","有邏輯地討論，就事論事"],
+      yourTips:["先講結論，再補充細節","除了指出問題，也說說欣賞的地方","接受「夠好」有時就是最好"],
+      careers:["工程師","會計財務","研究分析","品質管理","資料科學","法務"],
+      growth:"不是每件事都需要百分之百的資訊。替自己設一條「這樣就夠了」的線，你會輕鬆很多。" }
+};
+var ORDER = ["D","I","S","C"];
+
+var PAIRS = {
+  DI:{ name:"開路先鋒", text:"你既能拍板，又能號召人跟上，特別適合開創新局。要留意的是，別讓速度蓋過了傾聽。" },
+  DS:{ name:"穩健領頭羊", text:"你目標明確，同時也顧及團隊感受。有時你會在「往前推」和「照顧人」之間拉扯，這很正常。" },
+  DC:{ name:"策略家", text:"你要結果，也要正確，標準高、效率也高。小心別對自己和別人都太嚴格。" },
+  IS:{ name:"暖心連結者", text:"你好相處、人緣好，很會凝聚氣氛。對你來說比較難的，是說「不」和面對衝突。" },
+  IC:{ name:"創意說服家", text:"你點子多，又講得出道理。你可能常在「追求完美」和「想要新鮮」之間擺盪。" },
+  SC:{ name:"可靠守門員", text:"你細心、負責、按部就班，是最讓人放心的夥伴。面對快速變化時，可以多給自己一點彈性。" }
+};
+
+/* ---------- 題目（每題四個選項，各對應一種傾向） ---------- */
+var Q = [
+ ["週末突然空出一整天，你最可能…",{D:"把拖了很久的目標一口氣完成",I:"馬上揪朋友出去玩",S:"在家放鬆，或陪陪家人",C:"整理環境，順便規劃下週"}],
+ ["小組報告剛開始，你通常會先…",{D:"分好工，訂下期限",I:"丟出點子，把氣氛炒熱",S:"看看大家需要什麼，再補位",C:"把題目要求和評分標準讀清楚"}],
+ ["朋友最常說你是…",{D:"行動派",I:"開心果",S:"好好先生／小姐",C:"細心鬼"}],
+ ["跟別人意見不同時，你會…",{D:"直接說出看法，努力爭取",I:"用幽默化解，換個角度說服",S:"先退一步，避免傷了和氣",C:"拿資料和事實來討論"}],
+ ["要買一支新手機，你會…",{D:"很快決定，夠好就買",I:"看外型、流不流行、朋友推不推",S:"選用慣的品牌，不想重新適應",C:"比規格、看評測、算划不划算"}],
+ ["公司（或學校）公布新規定，你的反應是…",{D:"合理就照做，不合理就提出來改",I:"先問問大家怎麼看",S:"需要一點時間慢慢適應",C:"先把每一條細節和理由弄清楚"}],
+ ["最讓你受不了的是…",{D:"拖拖拉拉、沒效率",I:"被冷落，或氣氛很僵",S:"計畫突然被打亂、有人起衝突",C:"粗心出錯、規則不清楚"}],
+ ["被稱讚時，你最喜歡聽到…",{D:"「你真的很有能力」",I:"「跟你在一起好開心」",S:"「謝謝你一直都在」",C:"「你做得好仔細」"}],
+ ["跟朋友出去旅行，你通常負責…",{D:"決定去哪裡、什麼時候出發",I:"找好玩的地方、拍照分享",S:"照顧大家，帶藥帶零食",C:"排行程、訂票、查交通"}],
+ ["你傳訊息的風格比較像…",{D:"簡短直接，重點講完就好",I:"話很多，貼圖也很多",S:"溫和有禮，常先關心對方",C:"條理清楚，有時還會分點"}],
+ ["壓力很大的時候，你會…",{D:"變急躁，想自己掌控一切",I:"找人聊天抒發",S:"默默承受，不想麻煩別人",C:"躲回自己的空間，反覆思考"}],
+ ["在團隊裡，你最常扮演…",{D:"帶頭的人",I:"鼓舞士氣的人",S:"支援協調的人",C:"把關品質的人"}],
+ ["不小心犯了錯，你會…",{D:"立刻想辦法補救",I:"先道歉，讓大家別太在意",S:"很擔心是不是影響到別人",C:"找出原因，避免下次再犯"}],
+ ["學一項新東西時，你習慣…",{D:"直接動手試",I:"跟人一起學比較有動力",S:"有人一步步帶比較安心",C:"先看說明，搞懂原理"}],
+ ["你理想的工作環境是…",{D:"有挑戰，可以自己作主",I:"熱鬧，常有交流",S:"穩定，同事和善",C:"安靜，標準明確"}],
+ ["做決定時，你通常…",{D:"很快，邊做邊修正",I:"跟著感覺和直覺走",S:"比較慢，想先聽聽別人的意見",C:"很謹慎，要資訊足夠才決定"}],
+ ["在聚會上，你多半…",{D:"主導話題或活動",I:"到處聊天、認識新朋友",S:"跟熟悉的朋友待在一起",C:"觀察的時間比說話多"}],
+ ["朋友來找你幫忙，你會…",{D:"給他方向和解決方法",I:"幫他打氣，介紹能幫忙的人",S:"陪著他一起處理",C:"幫他把問題一條條拆清楚"}],
+ ["你的書桌通常…",{D:"只放現在要用的東西",I:"有點亂，但很有個人風格",S:"擺著有紀念意義的小物",C:"分類得整整齊齊"}],
+ ["你最不希望別人覺得你…",{D:"軟弱、沒能力",I:"無趣、不受歡迎",S:"自私、不體貼",C:"出錯、不專業"}],
+ ["開會時的你…",{D:"希望快點得出結論",I:"喜歡大家一起腦力激盪",S:"會注意有沒有人還沒發言",C:"會提出風險和細節"}],
+ ["計畫臨時被打亂，你會…",{D:"馬上重新決定方向",I:"覺得說不定是新機會",S:"有點不安，需要時間調整",C:"想知道原因，重新評估"}],
+ ["想說服別人時，你會…",{D:"講結果和好處",I:"用故事和熱情打動他",S:"靠彼此的信任和交情",C:"拿出證據，講道理"}],
+ ["你安排時間的方式是…",{D:"先做最重要、最有成果的事",I:"常常被臨時有趣的事吸引走",S:"照著習慣的節奏來",C:"列清單、排好優先順序"}],
+ ["收到批評時，你會…",{D:"不同意就直接反駁",I:"有點受傷，但很快就放下",S:"嘴上說好，心裡在意很久",C:"想知道具體是哪裡不對"}],
+ ["最讓你有成就感的時刻是…",{D:"完成一個很難的目標",I:"被大家認同和喜歡",S:"幫上了身邊的人",C:"把事情做到幾乎零失誤"}],
+ ["用一個詞形容自己，你會選…",{D:"果斷",I:"熱情",S:"可靠",C:"嚴謹"}],
+ ["有新同事加入，你會…",{D:"告訴他工作重點和目標",I:"主動帶他認識大家",S:"關心他適應得好不好",C:"給他文件和流程說明"}],
+ ["排隊排了很久，你會…",{D:"找替代方案，或乾脆離開",I:"跟旁邊的人聊起天來",S:"耐心地等",C:"估算還要多久，值不值得"}],
+ ["規定和人情起衝突時，你比較偏向…",{D:"哪個能把事情辦成就選哪個",I:"人情",S:"維持大家的和諧",C:"規定"}],
+ ["你最常被提醒的是…",{D:"「別那麼急、那麼兇」",I:"「說到要做到，細節要顧好」",S:"「要說出自己的想法」",C:"「別想太多，別太挑剔」"}],
+ ["說到長期的目標，你最想要…",{D:"成為能決定方向的人",I:"有影響力，人緣好",S:"生活安穩，家人朋友都好",C:"成為某個領域的專家"}]
+];
+var N = Q.length;
+var STORE = "animalMapDISC.v1";
+var THEME = "animalMapDISC.theme";
+
+/* ---------- 小工具 ---------- */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function load(k){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
+function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove("show");},1800); }
+function show(id){ ["home","quiz","result"].forEach(function(x){ $(x).classList.toggle("hidden",x!==id); }); window.scrollTo(0,0); }
+
+/* ---------- 深色模式 ---------- */
+function applyTheme(t){
+  if(t) document.documentElement.setAttribute("data-theme",t); else document.documentElement.removeAttribute("data-theme");
+  var dark = t ? t==="dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  $("themeBtn").textContent = dark ? "☀️ 淺色" : "🌓 深色";
+}
+$("themeBtn").addEventListener("click",function(){
+  var cur=document.documentElement.getAttribute("data-theme");
+  var dark = cur ? cur==="dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  var next = dark ? "light" : "dark";
+  try{ localStorage.setItem(THEME,next); }catch(e){}
+  applyTheme(next);
+});
+applyTheme((function(){ try{ return localStorage.getItem(THEME); }catch(e){ return null; } })());
+
+/* ---------- 狀態 ---------- */
+var state = load(STORE);
+function newState(){
+  return { answers:new Array(N).fill(null), opt:Q.map(function(){ return shuffle(ORDER); }), idx:0, done:false, scores:null, at:null };
+}
+function valid(s){ return s && Array.isArray(s.answers) && s.answers.length===N && Array.isArray(s.opt) && s.opt.length===N; }
+if(!valid(state)) state=null;
+
+/* ---------- 首頁 ---------- */
+$("qCount").textContent=N;
+$("animalCards").innerHTML = ORDER.map(function(k){ var t=TYPES[k];
+  return '<div class="animal" style="--k:'+t.color+'"><div class="emo">'+t.emoji+'</div><b>'+t.animal+'</b><small>'+t.key+' '+t.word+'</small></div>'; }).join("");
+
+function refreshHome(){
+  var inProgress = state && !state.done && state.answers.some(function(a){return a!==null;});
+  $("resumeBtn").classList.toggle("hidden",!inProgress);
+  $("lastBtn").classList.toggle("hidden",!(state && state.done));
+  $("startBtn").textContent = (state && (state.done||inProgress)) ? "重新開始" : "開始測驗";
+}
+$("agree").addEventListener("change",function(){ $("startBtn").disabled=!this.checked; });
+$("startBtn").addEventListener("click",function(){
+  if(state && !state.done && state.answers.some(function(a){return a!==null;}) && !confirm("要清除目前的進度，從頭開始嗎？")) return;
+  state=newState(); save(STORE,state); renderQ(); show("quiz");
+});
+$("resumeBtn").addEventListener("click",function(){ renderQ(); show("quiz"); });
+$("lastBtn").addEventListener("click",function(){ renderResult(state.scores,false); show("result"); });
+$("brandBtn").addEventListener("click",goHome);
+function goHome(){ if(location.hash) history.replaceState(null,"",location.pathname+location.search); refreshHome(); show("home"); }
+
+/* ---------- 作答 ---------- */
+function answeredCount(){ return state.answers.filter(function(a){return a!==null;}).length; }
+function renderQ(){
+  var i=state.idx, q=Q[i], ans=state.answers[i];
+  $("qNum").textContent="第 "+(i+1)+" / "+N+" 題";
+  var pct=Math.round(answeredCount()/N*100);
+  $("qPct").textContent=pct+"%"; $("qBar").style.width=pct+"%";
+  $("qText").textContent=q[0];
+  $("qOpts").innerHTML = state.opt[i].map(function(k,n){
+    return '<button type="button" class="opt'+(ans===k?' sel':'')+'" data-k="'+k+'"><span class="k">'+(n+1)+'</span><span>'+esc(q[1][k])+'</span></button>'; }).join("");
+  $("prevBtn").disabled = i===0;
+  var all = answeredCount()===N;
+  $("finishBtn").classList.toggle("hidden",!all);
+}
+$("qOpts").addEventListener("click",function(e){
+  var b=e.target.closest(".opt"); if(!b) return; choose(b.getAttribute("data-k"));
+});
+var busy=false;
+function choose(k){
+  if(busy) return;
+  state.answers[state.idx]=k; save(STORE,state); renderQ();
+  var next = state.answers.indexOf(null, state.idx+1);
+  if(next===-1) next = state.answers.indexOf(null);
+  if(next===-1){ return; } // 全部答完，顯示「看結果」
+  busy=true;
+  setTimeout(function(){ state.idx = (state.idx<N-1 && state.answers[state.idx+1]===null) ? state.idx+1 : next; save(STORE,state); renderQ(); busy=false; },220);
+}
+$("prevBtn").addEventListener("click",function(){ if(state.idx>0){ state.idx--; save(STORE,state); renderQ(); } });
+$("finishBtn").addEventListener("click",finish);
+document.addEventListener("keydown",function(e){
+  if($("quiz").classList.contains("hidden")) return;
+  if(e.key>="1"&&e.key<="4"){ choose(state.opt[state.idx][+e.key-1]); }
+  else if(e.key==="ArrowLeft"){ $("prevBtn").click(); }
+  else if(e.key==="ArrowRight" && state.answers[state.idx]!==null && state.idx<N-1){ state.idx++; save(STORE,state); renderQ(); }
+  else if(e.key==="Enter" && answeredCount()===N){ finish(); }
+});
+function finish(){
+  var s={D:0,I:0,S:0,C:0}; state.answers.forEach(function(a){ if(a) s[a]++; });
+  state.scores=s; state.done=true; state.at=new Date().toISOString(); save(STORE,state);
+  renderResult(s,false); show("result");
+}
+
+/* ---------- 結果 ---------- */
+function ranked(s){ return ORDER.slice().sort(function(a,b){ return s[b]-s[a] || ORDER.indexOf(a)-ORDER.indexOf(b); }); }
+function pcts(s){ var tot=ORDER.reduce(function(t,k){return t+s[k];},0)||1; var p={}; ORDER.forEach(function(k){ p[k]=Math.round(s[k]/tot*100); }); return p; }
+
+function radarSVG(p){
+  var cx=150,cy=150,R=100, ang={D:-135,I:-45,S:45,C:135};
+  var scale=Math.max(40,Math.max.apply(null,ORDER.map(function(k){return p[k];})));
+  function pt(k,r){ var a=ang[k]*Math.PI/180; return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; }
+  var g="";
+  [0.25,0.5,0.75,1].forEach(function(f){ g+='<polygon points="'+ORDER.map(function(k){return pt(k,R*f).join(",");}).join(" ")+'" fill="none" stroke="var(--line)" stroke-width="1"/>'; });
+  ORDER.forEach(function(k){ var e=pt(k,R); g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="var(--line)"/>'; });
+  var poly=ORDER.map(function(k){ return pt(k,R*Math.min(1,p[k]/scale)).join(","); }).join(" ");
+  g+='<polygon points="'+poly+'" fill="var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>';
+  ORDER.forEach(function(k){ var d=pt(k,R*Math.min(1,p[k]/scale)); g+='<circle cx="'+d[0]+'" cy="'+d[1]+'" r="4.5" fill="'+TYPES[k].color+'"/>'; });
+  ORDER.forEach(function(k){ var l=pt(k,R+30); g+='<text x="'+l[0]+'" y="'+(l[1]-4)+'" text-anchor="middle" font-size="22">'+TYPES[k].emoji+'</text><text x="'+l[0]+'" y="'+(l[1]+14)+'" text-anchor="middle" font-size="12" fill="var(--muted)">'+k+' '+p[k]+'%</text>'; });
+  return '<svg class="radar" viewBox="0 0 300 300" role="img" aria-label="四種傾向分布圖">'+g+'</svg>';
+}
+
+function renderResult(s,shared){
+  var r=ranked(s), p=pcts(s), A=TYPES[r[0]], B=TYPES[r[1]];
+  var spread=s[r[0]]-s[r[3]];
+  var balanced = spread<=3;
+  var pairKey=[r[0],r[1]].sort(function(a,b){return ORDER.indexOf(a)-ORDER.indexOf(b);}).join("");
+  var pair=PAIRS[pairKey];
+  var gap=s[r[0]]-s[r[1]];
+
+  var mix;
+  if(balanced){
+    mix='<p>你的四種動物比例非常接近，沒有特別突出的一型。這通常代表你很能依照場合切換風格：該衝的時候衝，該穩的時候穩。可以多留意在哪些情境下，你最自在、最像自己。</p>';
+  }else if(gap<=2){
+    mix='<p><b>'+A.emoji+' '+A.animal+' × '+B.emoji+' '+B.animal+'｜'+pair.name+'</b></p><p>你的前兩名幾乎一樣高，兩種風格同時很明顯：既有'+A.flavor+'，也有'+B.flavor+'。'+pair.text+'</p>';
+  }else{
+    mix='<p><b>以'+A.animal+'為主、'+B.animal+'為輔｜'+pair.name+'</b></p><p>你以'+A.flavor+'為核心，身上也帶著'+B.flavor+'。'+pair.text+'</p>';
+  }
+
+  var bars=r.map(function(k){ var t=TYPES[k];
+    return '<div class="bar-row"><span>'+t.emoji+' '+t.animal+'</span><div class="bar"><i style="width:'+p[k]+'%;background:'+t.color+'"></i></div><b>'+p[k]+'%</b></div>'; }).join("");
+
+  function li(arr){ return '<ul class="list">'+arr.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>'; }
+
+  var others=ORDER.filter(function(k){return k!==A.key;}).map(function(k){ var t=TYPES[k];
+    return '<div class="other"><div class="emo">'+t.emoji+'</div><div><b>和'+t.animal+'相處</b><div class="muted" style="font-size:15px">對方通常希望：'+esc(t.withYou.join("；"))+'。</div></div></div>'; }).join("");
+
+  var html=''+
+  (shared?'<div class="card no-print" style="text-align:center"><p style="margin:0">這是朋友分享給你的測驗結果。想知道你自己是哪一種嗎？</p><div class="btn-row" style="justify-content:center"><button class="btn primary" type="button" data-act="home">我也來測</button></div></div>':'')+
+  '<div class="card hero" style="--k:'+A.color+'">'+
+    '<div class="emo">'+A.emoji+'</div>'+
+    '<div class="type">'+(balanced?'四型均衡':'你的主要動物')+'｜'+A.name+'</div>'+
+    '<h1>'+(balanced?'百變的變色龍':(A.animal+'型'))+'</h1>'+
+    '<div class="tag">'+(balanced?'什麼場合，就是什麼樣子':A.tag)+'</div>'+
+  '</div>'+
+  '<div class="card"><h2>四種傾向分布</h2><div class="chart-grid">'+radarSVG(p)+'<div class="bars">'+bars+'</div></div></div>'+
+  '<div class="card"><h2>你的組合</h2>'+mix+'</div>'+
+  '<div class="card" style="border-left:5px solid '+A.color+'"><h2>'+A.emoji+' 關於'+A.animal+'型的你</h2><p>'+esc(A.desc)+'</p></div>'+
+  '<div class="two">'+
+    '<div class="card"><h3>💪 你的優勢</h3>'+li(A.strengths)+'</div>'+
+    '<div class="card"><h3>👀 容易忽略的地方</h3>'+li(A.blind)+'</div>'+
+  '</div>'+
+  '<div class="card"><h3>🌧️ 壓力來的時候</h3><p style="margin:0">'+esc(A.stress)+'</p></div>'+
+  '<div class="two">'+
+    '<div class="card"><h3>🤝 別人怎麼跟你溝通最順</h3>'+li(A.withYou)+'</div>'+
+    '<div class="card"><h3>🗣️ 你可以這樣調整</h3>'+li(A.yourTips)+'</div>'+
+  '</div>'+
+  '<div class="card"><h3>🧭 和其他動物相處的小提示</h3><div class="others">'+others+'</div></div>'+
+  '<div class="card"><h3>💼 可能適合的職涯方向</h3><p class="muted" style="font-size:15px">這些方向常能發揮'+A.animal+'的特質，搭配副型'+B.animal+'也可以參考：</p>'+
+    '<div class="chips">'+A.careers.map(function(c){return '<span class="chip">'+esc(c)+'</span>';}).join("")+B.careers.slice(0,3).map(function(c){return '<span class="chip" style="opacity:.75">'+esc(c)+'</span>';}).join("")+'</div></div>'+
+  '<div class="card"><h3>🌱 成長小建議</h3><p style="margin:0">'+esc(A.growth)+'</p></div>'+
+  '<div class="btn-row">'+
+    '<button class="btn primary" type="button" data-act="share">分享結果</button>'+
+    '<button class="btn" type="button" data-act="print">存成 PDF／列印</button>'+
+    (shared?'':'<button class="btn" type="button" data-act="retake">重新測驗</button>')+
+    '<button class="btn" type="button" data-act="home">回首頁</button>'+
+  '</div>'+
+  '<p class="note">本測驗參考 DISC 行為風格模型，題目與報告為原創內容，僅供自我了解，不構成心理診斷，也不應作為招募、考核等決策依據。'+(state&&state.at&&!shared?' 作答時間：'+new Date(state.at).toLocaleString("zh-TW")+'。':'')+'</p>';
+
+  var box=$("result"); box.innerHTML=html; box._scores=s;
+}
+
+$("result").addEventListener("click",function(e){
+  var b=e.target.closest("[data-act]"); if(!b) return;
+  var act=b.getAttribute("data-act"), s=$("result")._scores;
+  if(act==="home") goHome();
+  else if(act==="print") window.print();
+  else if(act==="retake"){ if(confirm("要清除這次的結果，重新作答嗎？")){ state=newState(); save(STORE,state); renderQ(); show("quiz"); } }
+  else if(act==="share"){
+    var r=ranked(s), t=TYPES[r[0]];
+    var url=location.origin+location.pathname+"#r="+ORDER.map(function(k){return k+s[k];}).join("-");
+    var text="我在「動物性格地圖」測出來是 "+t.emoji+t.animal+"型！你呢？";
+    if(navigator.share){ navigator.share({title:document.title,text:text,url:url}).catch(function(){}); }
+    else if(navigator.clipboard){ navigator.clipboard.writeText(text+" "+url).then(function(){toast("已複製分享連結");},function(){prompt("複製這個連結：",url);}); }
+    else prompt("複製這個連結：",url);
+  }
+});
+
+/* ---------- 讀取分享連結 ---------- */
+function fromHash(){
+  var m=/^#r=D(\d+)-I(\d+)-S(\d+)-C(\d+)$/.exec(location.hash);
+  if(!m) return null;
+  var s={D:+m[1],I:+m[2],S:+m[3],C:+m[4]};
+  return (s.D+s.I+s.S+s.C)>0 ? s : null;
+}
+var hs=fromHash();
+if(hs){ renderResult(hs,true); show("result"); } else { refreshHome(); show("home"); }
+window.addEventListener("hashchange",function(){ var h=fromHash(); if(h){ renderResult(h,true); show("result"); } });
+
+})();
+</script>
+</body>
+</html>
